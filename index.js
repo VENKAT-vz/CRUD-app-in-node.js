@@ -4,10 +4,8 @@ const mongoose = require('mongoose');
 const productRoutes=require("./routes/product.route.js");
 const app = express()
 
-//middleware
 app.use(express.json());
 
-//routes
 app.use("/api/products",productRoutes);
 
 app.get('/', (req, res) => {

@@ -1,0 +1,76 @@
+Node crud api:
+.>npm init -y
+.>node index.js
+  then, include "serve":"index.js"
+.>npm run serve
+.>npm i express  -to install express
+.>npm i nodemon -D  -to automatically update the changes in web page
+	"dev":"nodemon index.js"
+.>npm run dev
+
+--connect mongodb
+	->if not, create free atlas in mongodb-google account.
+	-> create new project.
+		->Name - create project
+		->create a deployment
+			->M0 , AWS , name of the cluster - create
+
+		->Create database user - venkateshknr , Venkat. Copy that connection string.
+		->To allow it access from anywhere include ip address 0.0.0.0/0
+		->Drivers in connect to (BackendDb)cluster
+	
+	.> npm install mongodb    -> installs mongodb in system and vscode add dependencies
+	.> npm i mongoose	  -> It is a MongoDB object modeling tool designed to work in asynchronous environment.
+
+	->connecting to database in code - mongoose.connect("<add the copied connection string").then(()=>{
+	console.log("Connected to database")
+)}
+.catch(()=>{
+console.log("Connection failed");
+)};
+
+For further details, refer code index.js.
+
+--------------------------------
+
+Now coming to business logic.
+Create a folder for model classes
+	->Create a js file for product model
+	->Inside that, how to declare variables and use it?
+		->const ProductSchema=mongoose.Schema(
+			{
+				name:{
+					type:String,
+					required:[true,"Please enter product name"]
+				},
+				similarly for other fields enter. and at last 
+			},
+			{
+				timestamps:true //it creates two fields createdAt and updatedAt with respective automatic timestamps.
+			}
+		);
+		const Product = mongoose.model("Product", ProductSchema); //creates in the database.
+		module.exports=Product//make it available for other files.
+
+-------------------------
+APIs for CRUD
+
+	In another file, 
+const Product = require("../models/productmodel.js")
+
+app.post('/api/products', async (req,res)=>{
+    try {
+        const products = await Product.find({});
+        res.status(200).json(products);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
+});
+
+//this is the way 
+
+//Later using route.js file to create routes for all apis	
+					
+	refer the code for that
+		
+
